@@ -11,7 +11,7 @@ function App() {
   const timeInSeconds = Math.floor((time % 6000) / 100);
   const timeInMilliseconds = Math.floor(time % 100);
 
-  const addItem = () => {
+  const addLap = () => {
     const newLap =
       timeInHours +
       ":" +
@@ -49,7 +49,7 @@ function App() {
 
   // Lap timer
   const lapTimer = () => {
-    addItem();
+    addLap();
   };
 
   // Reset timer
