@@ -7,6 +7,16 @@ function App() {
   const [showLap, setShowLap] = useState(0);
   const [items, setItems] = useState([]);
 
+  const timeInHours = Math.floor(time / 360000);
+  const timeInMinutes = Math.floor((time % 360000) / 6000);
+  const timeInSeconds = Math.floor((time % 6000) / 100);
+  const timeInMilliseconds = Math.floor(time % 100);
+
+  const showLapInHours = Math.floor(time / 360000);
+  const showLapInMinutes = Math.floor((time % 360000) / 6000);
+  const showLapInSeconds = Math.floor((time % 6000) / 100);
+  const showLapInMilliseconds = Math.floor(time % 100);
+
   const addItem = () => {
     const newItem =
       showLapInHours +
@@ -16,20 +26,11 @@ function App() {
       showLapInSeconds +
       ":" +
       showLapInMilliseconds;
+    console.log(newItem);
+    setShowLap(time);
     setItems([...items, newItem]);
   };
-
-  const timeInHours = Math.floor(time / 360000);
-  const timeInMinutes = Math.floor((time % 360000) / 6000);
-  const timeInSeconds = Math.floor((time % 6000) / 100);
-  const timeInMilliseconds = Math.floor(time % 100);
-
-  const showLapInHours = Math.floor(showLap / 360000);
-  const showLapInMinutes = Math.floor((showLap % 360000) / 6000);
-  const showLapInSeconds = Math.floor((showLap % 6000) / 100);
-  const showLapInMilliseconds = Math.floor(showLap % 100);
-
-  const array = [];
+  console.log(items, "items");
 
   useEffect(() => {
     let intervalId = null;
@@ -50,6 +51,7 @@ function App() {
 
   // Stop timer
   const stopTimer = () => {
+    setShowLap(time);
     setIsRunning(false);
   };
 
@@ -61,10 +63,11 @@ function App() {
 
   // Reset timer
   const resetTimer = () => {
-    setTime(0);
     setIsRunning(false);
+    setTime(0);
     setItems([]);
   };
+
   return (
     <div className="App">
       <h1>Lap Timer</h1>
@@ -78,13 +81,14 @@ function App() {
         <button onClick={resetTimer}>Reset Timer</button>
       </span>
 
-      {items.map((item) => {
-        return (
-          <div>
-            <li>{item}</li>
-          </div>
-        );
-      })}
+      {items.length > 0 &&
+        items.map((item) => {
+          return (
+            <div>
+              <li>{item}</li>
+            </div>
+          );
+        })}
     </div>
   );
 }
