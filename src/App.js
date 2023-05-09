@@ -4,33 +4,26 @@ import { useEffect, useState } from "react";
 function App() {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [showLap, setShowLap] = useState(0);
-  const [items, setItems] = useState([]);
+  const [laps, setLaps] = useState([]);
 
   const timeInHours = Math.floor(time / 360000);
   const timeInMinutes = Math.floor((time % 360000) / 6000);
   const timeInSeconds = Math.floor((time % 6000) / 100);
   const timeInMilliseconds = Math.floor(time % 100);
 
-  const showLapInHours = Math.floor(time / 360000);
-  const showLapInMinutes = Math.floor((time % 360000) / 6000);
-  const showLapInSeconds = Math.floor((time % 6000) / 100);
-  const showLapInMilliseconds = Math.floor(time % 100);
-
   const addItem = () => {
-    const newItem =
-      showLapInHours +
+    const newLap =
+      timeInHours +
       ":" +
-      showLapInMinutes +
+      timeInMinutes +
       ":" +
-      showLapInSeconds +
+      timeInSeconds +
       ":" +
-      showLapInMilliseconds;
-    console.log(newItem);
-    setShowLap(time);
-    setItems([...items, newItem]);
+      timeInMilliseconds;
+    console.log(newLap);
+    setLaps([...laps, newLap]);
   };
-  console.log(items, "items");
+  console.log(laps, "items");
 
   useEffect(() => {
     let intervalId = null;
@@ -51,13 +44,11 @@ function App() {
 
   // Stop timer
   const stopTimer = () => {
-    setShowLap(time);
     setIsRunning(false);
   };
 
   // Lap timer
   const lapTimer = () => {
-    setShowLap(time);
     addItem();
   };
 
@@ -65,7 +56,7 @@ function App() {
   const resetTimer = () => {
     setIsRunning(false);
     setTime(0);
-    setItems([]);
+    setLaps([]);
   };
 
   return (
@@ -81,11 +72,11 @@ function App() {
         <button onClick={resetTimer}>Reset Timer</button>
       </span>
 
-      {items.length > 0 &&
-        items.map((item) => {
+      {laps.length > 0 &&
+        laps.map((lap) => {
           return (
             <div>
-              <li>{item}</li>
+              <li>{lap}</li>
             </div>
           );
         })}
