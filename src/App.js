@@ -23,7 +23,7 @@ function App() {
     console.log(newLap);
     setLaps([...laps, newLap]);
   };
-  console.log(laps, "items");
+  console.log(laps, "Laps");
 
   useEffect(() => {
     let intervalId = null;
